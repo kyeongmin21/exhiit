@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import {useEffect, useRef} from 'react';
 
 export default function KakaoMap() {
     const mapRef = useRef<HTMLDivElement>(null);
@@ -72,9 +72,10 @@ export default function KakaoMap() {
     }, []);
 
     return (
-        <div
-            ref={mapRef}
-            style={{ width: '500px', height: '400px' }}
-        />
+        <div className='px-4 py-8'>
+            <div ref={mapRef}
+                 className='rounded-xl overflow-hidden w-full'
+                 style={{height: '400px'}}/>
+        </div>
     );
 }
