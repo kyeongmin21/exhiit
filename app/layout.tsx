@@ -3,6 +3,7 @@ import {Geist, Geist_Mono} from "next/font/google";
 import Providers from './providers'
 import KakaoMapScript from "@/components/map/KakaoMapScript";
 import "./globals.css";
+import {Header} from "@/components/layout/Header";
 
 
 const geistSans = Geist({
@@ -32,7 +33,10 @@ export default function RootLayout({
         >
         <body className="min-h-full flex flex-col">
         <KakaoMapScript/>
-        <Providers>{children}</Providers>
+        <Providers>
+            <Header/>
+            {children}
+        </Providers>
         </body>
         </html>
     );
