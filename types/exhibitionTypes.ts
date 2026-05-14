@@ -10,6 +10,11 @@ export interface ExhibitionItem {
     imageObject?: string  // 이미지
     description: string   // 설명
     viewCount: string     // 조회수
+
+    sido?: string | null
+    address?: string | null
+    lat?: string | null
+    lng?: string | null
 }
 
 export interface ExhibitionsResponse {

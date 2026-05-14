@@ -41,7 +41,7 @@ export default function KakaoMap() {
 
                     // 위치 권한 거부 or 실패
                     (error) => {
-                        console.error(error);
+                        console.warn('위치 권한 거부, fallback 좌표 사용')
 
                         // fallback 좌표
                         const options = {

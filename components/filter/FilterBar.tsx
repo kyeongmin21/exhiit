@@ -1,10 +1,6 @@
 'use client'
 import {FilterBoxProps} from '@/types/filterTypes'
-
-const REGIONS = [
-    '전체', '서울', '경기', '인천', '대전', '대구', '부산', '울산',
-    '광주', '세종', '강원', '충청', '전라', '경상', '제주'
-];
+import {REGIONS} from "@/constants/place";
 
 export default function FilterBox({
                                       selectedRegion,
@@ -47,6 +43,7 @@ export default function FilterBox({
                 <input
                     type="date"
                     value={endDate}
+                    min={startDate}
                     onChange={(e) => onEndDateChange(e.target.value)}
                     className="px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 />
