@@ -1,20 +1,17 @@
 import {useMemo} from "react";
 import {SIDO_MAP} from "@/constants/place";
-import {ExhibitionItem, ExhibitionsResponse} from '@/types/exhibitionTypes';
-import {InfiniteData} from "@tanstack/react-query";
+import {ExhibitionItem} from '@/types/exhibitionTypes';
 
 
 export function useFilter(
-    data: InfiniteData<ExhibitionsResponse> | undefined,
+    items: ExhibitionItem[],
     selectedRegion: string,
     startDate: string,
     endDate: string
 ) {
     return useMemo(() => {
-        if (!data?.pages) return [];
-        const allItems = data.pages.flatMap(page => page.items);
 
-        return allItems.filter((item: ExhibitionItem) => {
+        return items.filter((item: ExhibitionItem) => {
             // 지역 필터링
             let matchRegion = false;
             if (selectedRegion === '전체') {
@@ -46,5 +43,5 @@ export function useFilter(
 
             return matchRegion && matchDate;
         });
-    }, [data, selectedRegion, startDate, endDate]);
+    }, [items, selectedRegion, startDate, endDate]);
 }

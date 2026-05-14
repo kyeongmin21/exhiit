@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import {useFilter} from '@/hooks/useFilter';
 import {extractId} from "@/utils/exhibiton";
 import {useExhibitions} from '@/hooks/useExhibitions';
@@ -11,11 +11,35 @@ import Link from "next/link";
 
 
 export default function ExhibitionList() {
-    const {data, isLoading, isError} = useExhibitions();
+    const observerRef = useRef<HTMLDivElement | null>(null);
+
+    const {data, isLoading, isError, fetchNextPage, hasNextPage, isFetchingNextPage} = useExhibitions();
     const [selectedRegion, setSelectedRegion] = useState('전체');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const filteredItems = useFilter(data, selectedRegion, startDate, endDate);
+
+    // pages 합치기
+    const allItems = data?.pages.flatMap(page => page.items) ?? [];
+    const filteredItems = useFilter(allItems, selectedRegion, startDate, endDate);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+
+                if (entry.isIntersecting && hasNextPage) {
+                    fetchNextPage();
+                }
+            },
+            {threshold: 0.5}
+        );
+
+        if (observerRef.current) {
+            observer.observe(observerRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [fetchNextPage, hasNextPage]);
+
 
     if (isLoading) return <div className="p-10 text-center">불러오는 중...</div>;
     if (isError) return <div className="p-10 text-center">오류가 발생했어요 ㅜㅜ</div>;
@@ -35,10 +59,18 @@ export default function ExhibitionList() {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {filteredItems.map((item: ExhibitionItem, index: number) => (
                     <Link key={index} href={`/exhibition/${extractId(item.url)}`}>
-                        <ExhibitionCard item={item} />
+                        <ExhibitionCard item={item}/>
                     </Link>
                 ))}
             </div>
+
+            {/* 스크롤 감지 영역 */}
+            <div ref={observerRef} className="h-10"/>
+            {isFetchingNextPage && (
+                <div className="text-center py-5">
+                    더 불러오는 중...
+                </div>
+            )}
 
             {filteredItems.length === 0 && !isLoading && (
                 <div className="text-center py-20 text-gray-400">
