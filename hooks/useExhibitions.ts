@@ -4,7 +4,7 @@ import {ExhibitionItem, ExhibitionsResponse} from "@/types/exhibitionTypes";
 
 // https://www.culture.go.kr/data/openapi/openapiView.do?id=580&category=A&orderBy=rdfCnt&gubun=A#/default/%EC%9A%94%EC%B2%AD%EB%A9%94%EC%8B%9C%EC%A7%80%20Get
 
-const fetchExhibitions = async (pageNo = 1): Promise<ExhibitionsResponse> => {
+export const fetchExhibitions = async (pageNo = 1): Promise<ExhibitionsResponse> => {
     const res = await fetch(
         `https://api.kcisa.kr/openapi/CNV_060/request?serviceKey=${process.env.NEXT_PUBLIC_CULTURE_API_KEY}&numOfRows=20&pageNo=${pageNo}&dtype=전시`,
         {
@@ -46,7 +46,7 @@ export const useExhibitions = () => {
         getNextPageParam: (lastPage) => {
             const pageNo = Number(lastPage.pageNo)
             const totalCount = Number(lastPage.totalCount)
-            const hasMore = pageNo * 20 < totalCount
+            const hasMore = pageNo * 30 < totalCount
             return hasMore ? pageNo + 1 : undefined
         },
         initialPageParam: 1,

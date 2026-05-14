@@ -72,7 +72,7 @@ export default function KakaoMap() {
     }, []);
 
     return (
-        <div className='px-4 py-8'>
+        <div className='max-w-6xl mx-auto px-4 py-8'>
             <div ref={mapRef}
                  className='rounded-xl overflow-hidden w-full'
                  style={{height: '400px'}}/>

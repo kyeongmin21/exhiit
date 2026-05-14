@@ -2,10 +2,12 @@
 
 import {useState} from 'react';
 import {useFilter} from '@/hooks/useFilter';
+import {extractId} from "@/utils/exhibiton";
 import {useExhibitions} from '@/hooks/useExhibitions';
 import FilterBox from '@/components/filter/FilterBar';
 import ExhibitionCard from "@/components/exhibition/ExhibitionCard";
 import {ExhibitionItem} from '@/types/exhibitionTypes';
+import Link from "next/link";
 
 
 export default function ExhibitionList() {
@@ -20,7 +22,6 @@ export default function ExhibitionList() {
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">exhiit</h1>
 
             <FilterBox
                 selectedRegion={selectedRegion}
@@ -33,7 +34,9 @@ export default function ExhibitionList() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {filteredItems.map((item: ExhibitionItem, index: number) => (
-                    <ExhibitionCard key={index} item={item}/>
+                    <Link key={index} href={`/exhibition/${extractId(item.url)}`}>
+                        <ExhibitionCard item={item} />
+                    </Link>
                 ))}
             </div>
 
