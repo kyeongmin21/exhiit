@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎨 Exhibition
 
-## Getting Started
+## 프로젝트 소개
 
-First, run the development server:
+전시 정보를 한눈에 확인하고 예약까지 연결할 수 있는 전시 플랫폼입니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+사용자가 다양한 전시 리스트를 탐색하고, 원하는 전시의 상세 정보를 확인할 수 있으며 예약 페이지로 이동하여 전시를 예약할 수 있도록 구현했습니다.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+단순히 전시 정보만 제공하는 것이 아니라 사용자 입장에서 쉽고 빠르게 원하는 전시를 찾을 수 있도록 UI/UX를 고려하여 제작한 사이드 프로젝트입니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 사용 기술
 
-## Learn More
+### Frontend
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS
+- Zustand (상태 관리)
 
-To learn more about Next.js, take a look at the following resources:
+### API / Data
+- REST API
+- Axios
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Deployment
+- Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## ✨ 주요 기능
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 전시 리스트 조회
+- 전시 상세 페이지
+- 예약 페이지 연결
+- 필터 기능
+- 반응형 UI
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🔧 트러블 슈팅
+
+### 문제 1: 데이터 로딩 시 화면 깜빡임 발생
+
+**문제**
+
+전시 상세 페이지에 진입했을 때 특정 전시 정보만 필요한 상황이었지만,
+전체 전시 리스트 API를 다시 호출하고 있었습니다.
+
+메인 페이지에서는 전체 전시 목록이 필요하기 때문에 문제가 없었지만,
+상세 페이지에서는 필요한 데이터보다 많은 데이터를 요청하는 비효율적인 구조였습니다.
+
+
+**해결**
+
+---
+
+### 문제 2:
+
+**문제**
+
+
+**해결**
+
+---
+
+## 💡 개선 예정
+
+- 
