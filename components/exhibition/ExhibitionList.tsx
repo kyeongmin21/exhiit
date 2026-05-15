@@ -2,6 +2,7 @@
 
 import {useEffect, useState, useRef} from 'react';
 import {useFilter} from '@/hooks/useFilter';
+import {useItemsWithSido} from '@/hooks/useItemsWithSido';
 import {extractId} from "@/utils/exhibiton";
 import {useExhibitions} from '@/hooks/useExhibitions';
 import FilterBox from '@/components/filter/FilterBar';
@@ -18,14 +19,15 @@ export default function ExhibitionList() {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
-    // pages 합치기
     const allItems = data?.pages.flatMap(page => page.items) ?? [];
-    const filteredItems = useFilter(allItems, selectedRegion, startDate, endDate);
+
+    // 지역 필터 선택시에만 카카오 호출
+    const {enrichedItems, isEnriching} = useItemsWithSido(allItems, selectedRegion);
+    const filteredItems = useFilter(enrichedItems, selectedRegion, startDate, endDate);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
-
                 if (entry.isIntersecting && hasNextPage) {
                     fetchNextPage();
                 }
@@ -56,15 +58,21 @@ export default function ExhibitionList() {
                 onEndDateChange={setEndDate}
             />
 
+            {/* 지역 필터 선택 후 카카오 로딩 중 */}
+            {isEnriching && (
+                <div className="text-center py-5 text-gray-400">
+                    지역 정보 불러오는 중...
+                </div>
+            )}
+
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {filteredItems.map((item: ExhibitionItem, index: number) => (
-                    <Link key={index} href={`/exhibition/${extractId(item.url)}`}>
-                        <ExhibitionCard item={item}/>
+                    <Link key={item.url} href={`/exhibition/${extractId(item.url)}`}>
+                        <ExhibitionCard item={item} priority={index === 0}/>
                     </Link>
                 ))}
             </div>
 
-            {/* 스크롤 감지 영역 */}
             <div ref={observerRef} className="h-10"/>
             {isFetchingNextPage && (
                 <div className="text-center py-5">
@@ -72,7 +80,7 @@ export default function ExhibitionList() {
                 </div>
             )}
 
-            {filteredItems.length === 0 && !isLoading && (
+            {!isEnriching && filteredItems.length === 0 && !isLoading && (
                 <div className="text-center py-20 text-gray-400">
                     조건에 맞는 전시가 없습니다.
                 </div>
