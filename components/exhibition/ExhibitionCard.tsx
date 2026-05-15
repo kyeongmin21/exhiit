@@ -3,14 +3,17 @@ import {formatDate} from '@/utils/date';
 import {ExhibitionItem} from "@/types/exhibitionTypes";
 
 
-export default function ExhibitionCard({item}: { item: ExhibitionItem }) {
+export default function ExhibitionCard({item, priority = false}: {
+    item: ExhibitionItem,
+    priority?: boolean
+}) {
     return (
         <div className="rounded-xl overflow-hidden shadow hover:shadow-md transition">
             <div className='relative w-full h-48'>
                 {item.imageObject ? (
                     <Image
                         fill
-                        priority
+                        priority={priority}
                         src={item.imageObject}
                         alt={item.title}
                         className="object-cover"
