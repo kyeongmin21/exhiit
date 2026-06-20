@@ -44,7 +44,7 @@ export default function ExhibitionList() {
 
 
     if (isLoading) return <div className="p-10 text-center">불러오는 중...</div>;
-    if (isError) return <div className="p-10 text-center">오류가 발생했어요 ㅜㅜ</div>;
+    if (isError) return <div className="p-10 text-center">오류가 발생했어요.</div>;
 
     return (
         <div className="max-w-6xl mx-auto px-4 py-8">
